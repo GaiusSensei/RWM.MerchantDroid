@@ -40,42 +40,61 @@
         <div class="navbar navbar-static-top">
             <div class="navbar-inner">
                 <p class="brand">
-                    Resorts World Manila • Merchants</p>
+                    RWManila • Merchants</p>
                 <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
                     class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                 </a>
                 <div class="nav-collapse collapse">
                     <ul class="nav pull-right">
-                        <li><span class="navbar-text">Welcome, <span id="spnUser">Guest</span>! </span><a
-                            id="userLink" href="#" onclick="auth();">Log <span id="spnUserAction">In</span></a></li>
-                        <li><span id="spnTradingDay" class="navbar-text"></span></li>
+                        <li>
+                            <p class="navbar-text pull-right">
+                                Welcome, <strong><span id="spnUser"></span></strong>! <span id="spnTradingDay"></span>
+                            </p>
+                        </li>
                     </ul>
                 </div>
+            </div>
+        </div>
+        <!-- Body -->
+        <div class="row-fluid">
+            <div class="span4 offset4">
+                <br />
+                <p>
+                    <button id="btnCharge" class="btn btn-block btn-large btn-primary" disabled="disabled">
+                        Charge</button></p>
+                <p>
+                    <button id="btnCoupons" class="btn btn-block btn-large" disabled="disabled">
+                        <span id="spnPendingCoupons" style="display: inline-block; padding: 1px 5px 1px 5px;
+                            border: 2px solid Silver; background-color: Red; color: White;">0</span> Coupons</button></p>
+                <p>
+                    <button id="btnReports" class="btn btn-block btn-large" disabled="disabled">
+                        Reports</button></p>
+                <p>
+                    <button id="btnLogAct" class="btn btn-block btn-large btn-success" onclick="auth();">
+                        Log In</button></p>
             </div>
         </div>
     </div>
     <br />
     <!-- Sign In -->
-    <div id="signin" class="container modal hide fade">
+    <div id="signin" class="container-fluid modal hide fade">
         <h2>
             Welcome!</h2>
-        <div class="controls">
-            <div class="input-prepend input-xlarge">
-                <span class="add-on"><i class="icon-user"></i></span>
-                <input id="txtMId" type="text" class="input-block-level" placeholder="Merchant Identifier" /></div>
-            <div class="input-prepend input-xlarge">
-                <span class="add-on"><i class="icon-lock"></i></span>
-                <input id="txtMPw" type="password" class="input-block-level" placeholder="Password" /></div>
-            <div id="diaSignin" class="alert alert-block alert-warn fade in">
-                <span id="spnWait">Please Wait..</span> <span id="spnErr">Incorrect Credentials.<br />
-                    <a href="#" onclick="forgotPass();">Forgot Password?</a></span>
-            </div>
-            <p>
-                <button class="btn btn-primary" onclick="authSend();">
-                    Sign In</button>
-                <button class="btn" onclick="changePass();">
-                    Change Password?</button></p>
+        <div class="input-prepend input-block-level">
+            <span class="add-on"><i class="icon-user"></i></span>
+            <input id="txtMId" type="text" style="width: 85% !important;" placeholder="Merchant Identifier" /></div>
+        <div class="input-prepend input-block-level">
+            <span class="add-on"><i class="icon-lock"></i></span>
+            <input id="txtMPw" type="password" style="width: 85% !important;" placeholder="Password" /></div>
+        <div id="diaSignin" class="alert alert-block alert-warn fade in">
+            <span id="spnWait">Please Wait..</span> <span id="spnErr">Incorrect Credentials.<br />
+                <a href="#" onclick="forgotPass();">Forgot Password?</a></span>
         </div>
+        <p>
+            <button class="btn btn-primary" onclick="authSend();">
+                Sign In</button>
+            <button class="btn" onclick="changePass();">
+                Change Password?</button></p>
     </div>
     <!-- Change Pass -->
     <div id="changepw" class="container modal hide fade">
@@ -96,17 +115,17 @@
     </div>
     <!-- Alerts -->
     <div id="footer">
-        <div id="diaNoAuth" class="alert alert-block alert-info fade">
-            <h4>
-                :( You are not logged in.</h4>
-            <p>
-                Click the '<strong>Log In</strong>' link on the menu above.</p>
+        <div id="diaInfo" class="alert alert-block alert-info fade">
+            <h4 id="diaInfoHead">
+            </h4>
+            <p id="diaInfoBody">
+            </p>
         </div>
-        <div id="diaNoConn" class="alert alert-block alert-error fade">
-            <h4>
-                :( There seems to be no internet.</h4>
-            <p>
-                Please check the current internet status.</p>
+        <div id="diaError" class="alert alert-block alert-error fade">
+            <h4 id="diaErrorHead">
+            </h4>
+            <p id="diaErrorBody">
+            </p>
         </div>
     </div>
     <!-- Scripts -->
