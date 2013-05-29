@@ -1,0 +1,1 @@
+Copyright © 2013 Travellers International Hotel Group, Inc. All Rights Reserved.
