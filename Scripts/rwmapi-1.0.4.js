@@ -30,6 +30,8 @@ https://phoenix.rwmanila.com
     // Private Properties
     var publicUserId = "public",
         publicApiKey = "7CE766FE1473813B97C148EB9F7BD49514B9ECD0",
+        _xhr;
+    try {
         _xhr = new easyXDM.Rpc({
                     local: "/ie6bridge.html",
                     swf: phoenix.server + "/../Scripts/easyxdm.swf",
@@ -37,7 +39,10 @@ https://phoenix.rwmanila.com
                     remoteHelper: phoenix.server + "/../Scripts/name.html"
                     }, {
                         remote: { request: {} }
-                });;
+                });
+    } catch(e) {
+        _xhr = null;
+    }
     // Public Methods
     phoenix.public = function publicF(jsonRequest, successCallback) {
         phoenix.send(jsonRequest, successCallback, publicUserId, publicApiKey);
