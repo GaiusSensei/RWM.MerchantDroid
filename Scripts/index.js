@@ -7,6 +7,9 @@ $(document).ready(function readyF() {
     isOnline = false;
     showDiaError(":( There seems to be no internet.", "Please check the current internet status.");
     isAuth = false;
+    $('#signin').hide();
+    $('#changepw').hide();
+    $('#forgotpw').hide();
     $('#txtMId').keypress(function (e) {
         if (e.which == 13) {
             $('#txtMPw').focus().click();
@@ -108,6 +111,7 @@ $(document).ready(function readyF() {
 var auth = function authF() {
     if (!$.totalStorage('apiKey')) {
         $('#diaSignin').hide();
+        $('#signin').show();
         $('#signin').modal('show');
     } else {
         $.totalStorage('userId', null);
@@ -172,11 +176,13 @@ var authSendDone = function authSendDoneF(results) {
         $("#btnLogAct").addClass("btn-warning");
         $("#btnLogAct").text("Log Out");
         $('#signin').modal('hide');
+        $('#signin').hide();
     }
 }
 
 var changePass = function changePassF() {
     $('#signin').modal('hide');
+    $('#changepw').show();
     $('#changepw').modal('show');
     $("#txtCPwMId").val($("#txtMId").val());
 }
@@ -209,10 +215,12 @@ var changePassSend = function changePassSendF() {
             }
         });
     }
+    $('#changepw').hide();
 }
 
 var forgotPass = function forgotPassF() {
     $('#signin').modal('hide');
+    $('#forgotpw').show();
     $('#forgotpw').modal('show');
     $("#txtFPWMId").val($("#txtMId").val());
 }
@@ -242,7 +250,7 @@ var forgotPassSend = function forgotPassSendF() {
             }
         });
     }
-
+    $('#forgotpw').hide();
 }
 
 var getTDD = function getTDDF() {
@@ -272,24 +280,28 @@ var getTDDDone = function getTDDDoneF(data) {
 var showDiaInfo = function showDiaInfoF(header, body) {
     $("#diaInfoHead").text(header);
     $("#diaInfoBody").text(body);
+    $("#diaInfo").show();
     $("#diaInfo").addClass('in');
 }
 
 var hideDiaInfo = function hideDiaInfoF(header) {
     if ($("#diaInfoHead").text() === header) {
         $("#diaInfo").removeClass('in');
+        $("#diaInfo").hide();
     }
 }
 
 var showDiaError = function showDiaErrorF(header, body) {
     $("#diaErrorHead").text(header);
     $("#diaErrorBody").text(body);
+    $("#diaError").show();
     $("#diaError").addClass('in');
 }
 
 var hideDiaError = function hideDiaErrorF(header) {
     if ($("#diaErrorHead").text() === header) {
         $("#diaError").removeClass('in');
+        $("#diaError").hide();
     }
 }
 
