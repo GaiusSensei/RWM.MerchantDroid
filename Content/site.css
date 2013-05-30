@@ -7,3 +7,14 @@ body
     background-position: center center;
     background-repeat: no-repeat;
 }
+
+.navbar .brand
+{
+    font-size: 26px;
+}
+
+.navbar-inner 
+{
+    min-height: 46px;
+    padding-top: 6px;
+}

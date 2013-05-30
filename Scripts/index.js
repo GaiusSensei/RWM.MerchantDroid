@@ -1,4 +1,6 @@
-﻿var isOnline, isAuth;
+﻿var isOnline, isAuth,
+    publicUserId = 'public',
+    publicApiKey = '7CE766FE1473813B97C148EB9F7BD49514B9ECD0';
 $(document).ready(function readyF() {
     // Initialize stuff
     showDiaInfo(":| You are not logged in.", "Click the Log In button above.");
@@ -17,26 +19,36 @@ $(document).ready(function readyF() {
             return false;
         }
     });
-    $('#signin').modal({
-        backdrop: 'static',
-        show: false
-    });
-    $('#changepw').modal({
+    $('#signin, #changepw, #forgotpw').modal({
         backdrop: 'static',
         show: false
     });
     // Initialize Internet/Auth Checker
+    document.addEventListener("offline", function () {
+        if (isOnline) {
+            showDiaError(":( There seems to be no internet.", "Please check the current internet status.");
+            isOnline = false;
+        }
+    }, false);
+    document.addEventListener("online", function () {
+        if (!isOnline) {
+            hideDiaError(":( There seems to be no internet.");
+            isOnline = true;
+        }
+    }, false);
     window.setInterval(function checkConnF() {
-        // Check if online
-        if (!window.navigator.onLine) {
-            if (isOnline) {
-                showDiaError(":( There seems to be no internet.", "Please check the current internet status.");
-                isOnline = false;
-            }
-        } else {
-            if (!isOnline) {
-                hideDiaError(":( There seems to be no internet.");
-                isOnline = true;
+        // Check if online (Doesn't work with phonegap)
+        if (!window.phonegap) {
+            if (!window.navigator.onLine) {
+                if (isOnline) {
+                    showDiaError(":( There seems to be no internet.", "Please check the current internet status.");
+                    isOnline = false;
+                }
+            } else {
+                if (!isOnline) {
+                    hideDiaError(":( There seems to be no internet.");
+                    isOnline = true;
+                }
             }
         }
         // Check if authenticated
@@ -122,8 +134,8 @@ var authSend = function authSendF() {
     $('#diaSignin').removeClass('alert-error');
     $('#diaSignin').addClass('alert-warn');
     $('#spnWait').show();
-    phoenix.userId = "public";
-    phoenix.apiKey = "7CE766FE1473813B97C148EB9F7BD49514B9ECD0";
+    phoenix.userId = publicUserId;
+    phoenix.apiKey = publicApiKey;
     phoenix.send({
         cgrp: '$merchants',
         cmnd: 'auth',
@@ -165,11 +177,70 @@ var changePass = function changePassF() {
     $('#signin').modal('hide');
     $('#changepw').modal('show');
     $("#txtCPwMId").val($("#txtMId").val());
-    $('#diaChangePW').hide();
+}
+
+var changePassSend = function changePassSendF() {
+    $('#changepw').modal('hide');
+    if ($('#txtCPwMId').val().length < 1) {
+        showAlrInfo("Something's wrong!", "Merchant Identifier is required. Please try again..");
+    } else if ($('#txtCPwNPw1').val().length < 6) {
+        showAlrInfo("Something's wrong!", "The new password is too short! At least six characters are required. Please try again..");
+    } else if ($('#txtCPwNPw1').val() !== $('#txtCPwNPw2').val()) {
+        showAlrInfo("Something's wrong!", "The new passwords did not match! Please try again..");
+    } else {
+        phoenix.userId = publicUserId;
+        phoenix.apiKey = publicApiKey;
+        phoenix.send({
+            cgrp: '$merchants',
+            cmnd: 'authChange',
+            prms: {
+                'username': $('#txtCPwMId').val(),
+                'oldPassword': $('#txtCPwOPw').val(),
+                'newPassword': $('#txtCPwNPw1').val()
+            }
+        }, function authChangedF(data) {
+            var d = JSON.parse(data);
+            if (d.exitCode === 0) {
+                showAlrInfo("Something's wrong!", d.response['error']);
+            } else {
+                showAlrInfo("Password Change Successful!", "You may now log in using the new credentials.");
+            }
+        });
+    }
 }
 
 var forgotPass = function forgotPassF() {
     $('#signin').modal('hide');
+    $('#forgotpw').modal('show');
+    $("#txtFPWMId").val($("#txtMId").val());
+}
+
+var forgotPassSend = function forgotPassSendF() {
+    $('#forgotpw').modal('hide');
+    if ($('#txtFPWMId').val().length < 1) {
+        showAlrInfo("Something's wrong!", "Merchant Identifier is required. Please try again..");
+    } else if ($('#txtFPWMEa').val().length < 1) {
+        showAlrInfo("Something's wrong!", "Merchant Email Address is required. Please try again..");
+    } else {
+        phoenix.userId = publicUserId;
+        phoenix.apiKey = publicApiKey;
+        phoenix.send({
+            cgrp: '$merchants',
+            cmnd: 'authForgot',
+            prms: {
+                'username': $('#txtFPWMId').val(),
+                'email': $('#txtFPWMEa').val()
+            }
+        }, function authChangedF(data) {
+            var d = JSON.parse(data);
+            if (d.exitCode === 0) {
+                showAlrInfo("Something's wrong!", d.response['error']);
+            } else {
+                showAlrInfo("New Password Generated!", "You may now log in using the new credentials sent to your email address.");
+            }
+        });
+    }
+
 }
 
 var getTDD = function getTDDF() {
@@ -218,6 +289,12 @@ var hideDiaError = function hideDiaErrorF(header) {
     if ($("#diaErrorHead").text() === header) {
         $("#diaError").removeClass('in');
     }
+}
+
+var showAlrInfo = function showAlrInfoF(header, body) {
+    $("#alrInfoHead").text(header);
+    $("#alrInfoBody").text(body);
+    $("#alrInfo").modal('show');
 }
 
 var refreshCouponCount = function refreshCouponCountF() {

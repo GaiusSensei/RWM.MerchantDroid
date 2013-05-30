@@ -18,7 +18,7 @@
             position: absolute;
             bottom: 0px;
         }
-        #signin, #changepw
+        #signin, #changepw, #forgotpw, #alrInfo
         {
             max-width: 300px;
             padding: 19px 29px 29px;
@@ -31,6 +31,14 @@
             -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
             -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
             box-shadow: 0 1px 2px rgba(0,0,0,.05);
+        }
+        #spnPendingCoupons
+        {
+            display: inline-block;
+            padding: 1px 5px 1px 5px;
+            border: 2px solid Silver;
+            background-color: Red;
+            color: White;
         }
     </style>
 </head>
@@ -64,8 +72,7 @@
                         Charge</button></p>
                 <p>
                     <button id="btnCoupons" class="btn btn-block btn-large" disabled="disabled">
-                        <span id="spnPendingCoupons" style="display: inline-block; padding: 1px 5px 1px 5px;
-                            border: 2px solid Silver; background-color: Red; color: White;">0</span> Coupons</button></p>
+                        <span id="spnPendingCoupons">0</span> Coupons</button></p>
                 <p>
                     <button id="btnReports" class="btn btn-block btn-large" disabled="disabled">
                         Reports</button></p>
@@ -102,19 +109,42 @@
             Change Password</h2>
         <div class="controls">
             <input id="txtCPwMId" type="text" class="input-block-level" placeholder="Merchant Identifier" />
-            <input type="password" class="input-block-level" placeholder="Old Password" />
-            <input type="password" class="input-block-level" placeholder="New Password" />
-            <input type="password" class="input-block-level" placeholder="Re-enter Password" />
-            <div id="diaChangePW" class="alert alert-block alert-warn fade in">
-                <span id="spnChangeWait">Please Wait..</span> <span id="spnChangeErr">Incorrect Credentials.</span>
-            </div>
+            <input id="txtCPwOPw" type="password" class="input-block-level" placeholder="Old Password" />
+            <input id="txtCPwNPw1" type="password" class="input-block-level" placeholder="New Password" />
+            <input id="txtCPwNPw2" type="password" class="input-block-level" placeholder="Re-enter Password" />
             <p>
                 <button class="btn btn-primary" onclick="changePassSend();">
-                    Change Password</button></p>
+                    Change Password</button>
+                <button class="btn" onclick="$('#changepw').modal('hide');">
+                    Cancel</button></p>
         </div>
     </div>
-    <!-- Alerts -->
+    <!-- Forgot Pass -->
+    <div id="forgotpw" class="container modal hide fade">
+        <h2>
+            Forgot Password</h2>
+        <div class="controls">
+            <input id="txtFPWMId" type="text" class="input-block-level" placeholder="Merchant Identifier" />
+            <input id="txtFPWMEa" type="text" class="input-block-level" placeholder="Email Address" />
+            <p>
+                <button class="btn btn-primary" onclick="forgotPassSend();">
+                    Generate New Password</button>
+                <button class="btn" onclick="$('#forgotpw').modal('hide');">
+                    Cancel</button></p>
+        </div>
+    </div>
     <div id="footer">
+        <!-- Alerts -->
+        <div id="alrInfo" class="container modal hide fade">
+            <h3 id="alrInfoHead">
+            </h3>
+            <p id="alrInfoBody">
+            </p>
+            <p>
+                <button class="btn btn-block" onclick="$('#alrInfo').modal('hide');">
+                    Okay</button></p>
+        </div>
+        <!-- Notifications -->
         <div id="diaInfo" class="alert alert-block alert-info fade">
             <h4 id="diaInfoHead">
             </h4>
@@ -129,10 +159,11 @@
         </div>
     </div>
     <!-- Scripts -->
+    <script src="phonegap.js"></script>
     <script type="text/javascript" src="Scripts/jQuery/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="Scripts/jQuery/jquery.total-storage.js"></script>
     <script type="text/javascript" src="Scripts/Bootstrap/bootstrap.js"></script>
-    <script type="text/javascript" src="https://phoenix.rwmanila.com/Scripts/rwmapi-1.0.4.min.js"></script>
+    <script type="text/javascript" src="https://phoenix.rwmanila.com/Scripts/rwmapi-1.0.4.js"></script>
     <script type="text/javascript" src="Scripts/index.js"></script>
 </body>
 </html>
