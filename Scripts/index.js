@@ -1,12 +1,5 @@
-﻿var isOnline, isAuth,
-    publicUserId = 'public',
-    publicApiKey = '7CE766FE1473813B97C148EB9F7BD49514B9ECD0';
-$(document).ready(function readyF() {
+﻿$(document).ready(function readyF() {
     // Initialize stuff
-    showDiaInfo(":| You are not logged in.", "Click the Log In button above.");
-    isOnline = false;
-    showDiaError(":( There seems to be no internet.", "Please check the current internet status.");
-    isAuth = false;
     $('#signin').hide();
     $('#changepw').hide();
     $('#forgotpw').hide();
@@ -26,49 +19,6 @@ $(document).ready(function readyF() {
         backdrop: 'static',
         show: false
     });
-    // Initialize Internet/Auth Checker
-    if (window.cordova) {
-        document.addEventListener("offline", function () {
-            if (isOnline) {
-                showDiaError(":( There seems to be no internet.", "Please check the current internet status.");
-                isOnline = false;
-            }
-        }, false);
-        document.addEventListener("online", function () {
-            if (!isOnline) {
-                hideDiaError(":( There seems to be no internet.");
-                isOnline = true;
-            }
-        }, false);
-    }
-    window.setInterval(function checkConnF() {
-        // Check if online (Doesn't work with phonegap)
-        if (!window.cordova) {
-            if (!window.navigator.onLine) {
-                if (isOnline) {
-                    showDiaError(":( There seems to be no internet.", "Please check the current internet status..");
-                    isOnline = false;
-                }
-            } else {
-                if (!isOnline) {
-                    hideDiaError(":( There seems to be no internet.");
-                    isOnline = true;
-                }
-            }
-        }
-        // Check if authenticated
-        if (!$.totalStorage('apiKey')) {
-            if (isAuth) {
-                showDiaInfo(":| You are not logged in.", "Click the Log In button above.");
-                isAuth = false;
-            }
-        } else {
-            if (!isAuth) {
-                hideDiaInfo(":| You are not logged in.");
-                isAuth = true;
-            }
-        }
-    }, 1000);
     // Coupon Check
     refreshCouponCount();
     window.setInterval(function checkCouponsF() {
@@ -93,6 +43,7 @@ $(document).ready(function readyF() {
         $("#btnLogAct").removeClass("btn-warning");
         $("#btnLogAct").addClass("btn-success");
         $("#btnLogAct").text("Log In");
+        showDiaInfo(":| You are not logged in.", "Click the Log In button above.");
     } else {
         // Log In
         $("#spnUser").text($.totalStorage('username'));
@@ -104,7 +55,7 @@ $(document).ready(function readyF() {
         $("#btnLogAct").removeClass("btn-success");
         $("#btnLogAct").addClass("btn-warning");
         $("#btnLogAct").text("Log Out");
-        $('#signin').modal('hide');
+        hideDiaInfo(":| You are not logged in.");
     }
 });
 
@@ -131,6 +82,7 @@ var auth = function authF() {
         $("#btnLogAct").addClass("btn-success");
         $("#btnLogAct").text("Log In");
         hideDiaInfo(":| Trading day is CLOSED!");
+        showDiaInfo(":| You are not logged in.", "Click the Log In button above.");
     }
 }
 
@@ -140,9 +92,7 @@ var authSend = function authSendF() {
     $('#diaSignin').removeClass('alert-error');
     $('#diaSignin').addClass('alert-warn');
     $('#spnWait').show();
-    phoenix.userId = publicUserId;
-    phoenix.apiKey = publicApiKey;
-    phoenix.send({
+    phoenix.public({
         cgrp: '$merchants',
         cmnd: 'auth',
         prms: {
@@ -175,6 +125,7 @@ var authSendDone = function authSendDoneF(results) {
         $("#btnLogAct").removeClass("btn-success");
         $("#btnLogAct").addClass("btn-warning");
         $("#btnLogAct").text("Log Out");
+        hideDiaInfo(":| You are not logged in.");
         $('#signin').modal('hide');
         $('#signin').hide();
     }
@@ -196,9 +147,7 @@ var changePassSend = function changePassSendF() {
     } else if ($('#txtCPwNPw1').val() !== $('#txtCPwNPw2').val()) {
         showAlrInfo("Something's wrong!", "The new passwords did not match! Please try again..");
     } else {
-        phoenix.userId = publicUserId;
-        phoenix.apiKey = publicApiKey;
-        phoenix.send({
+        phoenix.public({
             cgrp: '$merchants',
             cmnd: 'authChange',
             prms: {
@@ -232,9 +181,7 @@ var forgotPassSend = function forgotPassSendF() {
     } else if ($('#txtFPWMEa').val().length < 1) {
         showAlrInfo("Something's wrong!", "Merchant Email Address is required. Please try again..");
     } else {
-        phoenix.userId = publicUserId;
-        phoenix.apiKey = publicApiKey;
-        phoenix.send({
+        phoenix.public({
             cgrp: '$merchants',
             cmnd: 'authForgot',
             prms: {
@@ -288,20 +235,6 @@ var hideDiaInfo = function hideDiaInfoF(header) {
     if ($("#diaInfoHead").text() === header) {
         $("#diaInfo").removeClass('in');
         $("#diaInfo").hide();
-    }
-}
-
-var showDiaError = function showDiaErrorF(header, body) {
-    $("#diaErrorHead").text(header);
-    $("#diaErrorBody").text(body);
-    $("#diaError").show();
-    $("#diaError").addClass('in');
-}
-
-var hideDiaError = function hideDiaErrorF(header) {
-    if ($("#diaErrorHead").text() === header) {
-        $("#diaError").removeClass('in');
-        $("#diaError").hide();
     }
 }
 
