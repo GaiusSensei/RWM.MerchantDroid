@@ -24,24 +24,26 @@ $(document).ready(function readyF() {
         show: false
     });
     // Initialize Internet/Auth Checker
-    document.addEventListener("offline", function () {
-        if (isOnline) {
-            showDiaError(":( There seems to be no internet.", "Please check the current internet status.");
-            isOnline = false;
-        }
-    }, false);
-    document.addEventListener("online", function () {
-        if (!isOnline) {
-            hideDiaError(":( There seems to be no internet.");
-            isOnline = true;
-        }
-    }, false);
+    if (window.cordova) {
+        document.addEventListener("offline", function () {
+            if (isOnline) {
+                showDiaError(":( There seems to be no internet.", "Please check the current internet status.");
+                isOnline = false;
+            }
+        }, false);
+        document.addEventListener("online", function () {
+            if (!isOnline) {
+                hideDiaError(":( There seems to be no internet.");
+                isOnline = true;
+            }
+        }, false);
+    }
     window.setInterval(function checkConnF() {
         // Check if online (Doesn't work with phonegap)
-        if (!window.phonegap) {
+        if (!window.cordova) {
             if (!window.navigator.onLine) {
                 if (isOnline) {
-                    showDiaError(":( There seems to be no internet.", "Please check the current internet status.");
+                    showDiaError(":( There seems to be no internet.", "Please check the current internet status..");
                     isOnline = false;
                 }
             } else {
