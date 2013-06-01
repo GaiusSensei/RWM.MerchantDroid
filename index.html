@@ -1,24 +1,24 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
+    
     <head>
         <meta charset="utf-8">
         <title>Resorts World Manila</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="Stylesheet" type="text/css" href="Content/bootstrap.min.css" />
-        <link rel="Stylesheet" type="text/css" href="Content/bootstrap-responsive.min.css" />
+        <link rel="Stylesheet" type="text/css" href="Content/bootstrap.min.css"
+        />
+        <link rel="Stylesheet" type="text/css" href="Content/bootstrap-responsive.min.css"
+        />
         <link rel="Stylesheet" type="text/css" href="Content/site.css" />
         <style type="text/css">
-            #userLink
-            {
+            #userLink {
                 display: inline;
             }
-            #diaInfo
-            {
+            #diaInfo {
                 position: absolute;
-                bottom: 0px;
+                bottom: 0;
             }
-            #signin, #changepw, #forgotpw, #alrInfo
-            {
+            #signin, #changepw, #forgotpw, #pleaseWait, #alrInfo {
                 max-width: 300px;
                 padding: 19px 29px 29px;
                 margin: 0 auto 20px;
@@ -27,12 +27,11 @@
                 -webkit-border-radius: 5px;
                 -moz-border-radius: 5px;
                 border-radius: 5px;
-                -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-                -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+                -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+                box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
             }
-            #spnPendingCoupons
-            {
+            #spnPendingCoupons {
                 display: inline-block;
                 padding: 1px 5px 1px 5px;
                 border: 2px solid Silver;
@@ -41,20 +40,24 @@
             }
         </style>
     </head>
+    
     <body>
         <div class="container-fluid">
             <!-- Navbar -->
             <div class="navbar navbar-static-top">
                 <div class="navbar-inner">
-                    <p class="brand">
-                    RWM • Merchants</p>
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                    <p class="brand">RWM • Merchants</p>
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                     </a>
                     <div class="nav-collapse collapse">
                         <ul class="nav pull-right">
                             <li>
-                                <p class="navbar-text pull-right">
-                                Welcome, <strong><span id="spnUser"></span></strong>! <span id="spnTradingDay"></span>
+                                <p class="navbar-text pull-right">Welcome,
+                                    <strong>
+                                        <span id="spnUser"></span>
+                                    </strong>!
+                                    <span id="spnTradingDay"></span>
                                 </p>
                             </li>
                         </ul>
@@ -66,103 +69,114 @@
                 <div class="span4 offset4">
                     <br />
                     <p>
-                        <button id="btnCharge" class="btn btn-block btn-large btn-primary" disabled="disabled">
-                        Charge</button></p>
+                        <button id="btnCharge" class="btn btn-block btn-large btn-primary" disabled="disabled"
+                        onclick="checkConnection(goToCharge);">Charge</button>
+                    </p>
                     <p>
                         <button id="btnCoupons" class="btn btn-block btn-large" disabled="disabled">
-                            <span id="spnPendingCoupons">0</span> Coupons</button></p>
+                            <span id="spnPendingCoupons">0</span>Coupons</button>
+                    </p>
                     <p>
-                        <button id="btnReports" class="btn btn-block btn-large" disabled="disabled">
-                        Reports</button></p>
+                        <button id="btnReports" class="btn btn-block btn-large" disabled="disabled">Reports</button>
+                    </p>
                     <p>
-                        <button id="btnLogAct" class="btn btn-block btn-large btn-success" onclick="auth();">
-                        Log In</button></p>
+                        <button id="btnLogAct" class="btn btn-block btn-large btn-success" onclick="auth();">Log In</button>
+                    </p>
                 </div>
             </div>
         </div>
         <br />
         <!-- Sign In -->
         <div id="signin" class="container-fluid modal hide fade">
-            <h2>
-            Welcome!</h2>
+            <h2>Welcome!</h2>
             <div class="input-prepend input-block-level">
-                <span class="add-on"><i class="icon-user"></i></span>
-                <input id="txtMId" type="text" style="width: 85% !important;" placeholder="Merchant Identifier" />
+                <span class="add-on">
+                    <i class="icon-user"></i>
+                </span>
+                <input id="txtMId" type="text" style="width: 85% !important;" placeholder="Merchant Identifier"
+                />
             </div>
             <div class="input-prepend input-block-level">
-                <span class="add-on"><i class="icon-lock"></i></span>
-                <input id="txtMPw" type="password" style="width: 85% !important;" placeholder="Password" />
+                <span class="add-on">
+                    <i class="icon-lock"></i>
+                </span>
+                <input id="txtMPw" type="password" style="width: 85% !important;" placeholder="Password"
+                />
             </div>
             <div id="diaSignin" class="alert alert-block alert-warn fade in">
-                <span id="spnWait">Please Wait..</span> <span id="spnErr">Incorrect Credentials.<br />
-                    <a href="#" onclick="forgotPass();">Forgot Password?</a></span>
+                <span id="spnWait">Please Wait..</span>
+                <span id="spnErr">Incorrect Credentials.
+                    <br />
+                    <a href="#" onclick="forgotPass();">Forgot Password?</a>
+                </span>
             </div>
             <p>
-                <button class="btn btn-primary" onclick="authSend();">
-                Sign In</button>
-                <button class="btn" onclick="changePass();">
-                Change Password?</button></p>
+                <button class="btn btn-primary" onclick="authSend();">Sign In</button>
+                <button class="btn" onclick="changePass();">Change Password?</button>
+            </p>
         </div>
         <!-- Change Pass -->
         <div id="changepw" class="container-fluid modal hide fade">
-            <h2>
-            Change Password</h2>
+            <h2>Change Password</h2>
             <div class="controls">
-                <input id="txtCPwMId" type="text" class="input-block-level" placeholder="Merchant Identifier" />
-                <input id="txtCPwOPw" type="password" class="input-block-level" placeholder="Old Password" />
-                <input id="txtCPwNPw1" type="password" class="input-block-level" placeholder="New Password" />
-                <input id="txtCPwNPw2" type="password" class="input-block-level" placeholder="Re-enter Password" />
+                <input id="txtCPwMId" type="text" class="input-block-level" placeholder="Merchant Identifier"
+                />
+                <input id="txtCPwOPw" type="password" class="input-block-level" placeholder="Old Password"
+                />
+                <input id="txtCPwNPw1" type="password" class="input-block-level" placeholder="New Password"
+                />
+                <input id="txtCPwNPw2" type="password" class="input-block-level" placeholder="Re-enter Password"
+                />
                 <p>
-                    <button class="btn btn-primary" onclick="changePassSend();">
-                    Change Password</button>
-                    <button class="btn" onclick="$('#changepw').modal('hide');">
-                    Cancel</button></p>
+                    <button class="btn btn-primary" onclick="changePassSend();">Change Password</button>
+                    <button class="btn" onclick="$('#changepw').modal('hide');">Cancel</button>
+                </p>
             </div>
         </div>
         <!-- Forgot Pass -->
         <div id="forgotpw" class="container-fluid modal hide fade">
-            <h2>
-            Forgot Password</h2>
+            <h2>Forgot Password</h2>
             <div class="controls">
-                <input id="txtFPWMId" type="text" class="input-block-level" placeholder="Merchant Identifier" />
-                <input id="txtFPWMEa" type="text" class="input-block-level" placeholder="Email Address" />
+                <input id="txtFPWMId" type="text" class="input-block-level" placeholder="Merchant Identifier"
+                />
+                <input id="txtFPWMEa" type="text" class="input-block-level" placeholder="Email Address"
+                />
                 <p>
-                    <button class="btn btn-primary" onclick="forgotPassSend();">
-                    Generate New Password</button>
-                    <button class="btn" onclick="$('#forgotpw').modal('hide');">
-                    Cancel</button></p>
+                    <button class="btn btn-primary" onclick="forgotPassSend();">Generate New Password</button>
+                    <button class="btn" onclick="$('#forgotpw').modal('hide');">Cancel</button>
+                </p>
             </div>
+        </div>
+        <!-- Please Wait -->
+        <div id="pleaseWait" class="container-fluid modal hide fade">
+            <h3>Checking conection to Resorts World Manila..</h3>
+            <img style="display:block; margin:0 auto;" src="Images/wait.gif" alt="Please Wait.."
+            />
         </div>
         <!-- Notifications -->
         <div id="diaInfo" class="alert alert-block alert-info fade">
-            <h4 id="diaInfoHead">
-            </h4>
-            <p id="diaInfoBody">
-            </p>
+            <h4 id="diaInfoHead"></h4>
+            <p id="diaInfoBody"></p>
         </div>
         <div id="diaError" class="alert alert-block alert-error fade">
-            <h4 id="diaErrorHead">
-            </h4>
-            <p id="diaErrorBody">
-            </p>
+            <h4 id="diaErrorHead"></h4>
+            <p id="diaErrorBody"></p>
         </div>
         <!-- Alerts -->
         <div id="alrInfo" class="container modal hide fade">
-            <h3 id="alrInfoHead">
-            </h3>
-            <p id="alrInfoBody">
-            </p>
+            <h3 id="alrInfoHead"></h3>
+            <p id="alrInfoBody"></p>
             <p>
-                <button class="btn btn-block" onclick="$('#alrInfo').modal('hide');">
-                    Okay</button></p>
+                <button class="btn btn-block" onclick="$('#alrInfo').modal('hide');">Okay</button>
+            </p>
         </div>
         <!-- Scripts -->
         <script src="phonegap.js"></script>
         <script type="text/javascript" src="Scripts/jQuery/jquery-1.9.1.min.js"></script>
         <script type="text/javascript" src="Scripts/jQuery/jquery.total-storage.min.js"></script>
         <script type="text/javascript" src="Scripts/Bootstrap/bootstrap.min.js"></script>
-        <!-- <script type="text/javascript" src="https://phoenix.rwmanila.com/Scripts/rwmapi-1.0.4.min.js"></script> -->
-        <script type="text/javascript" src="Scripts/rwmapi-1.0.4.js"></script>
+        <script type="text/javascript" src="Scripts/Phoenix/rwmapi-1.0.4.js"></script>
         <script type="text/javascript" src="Scripts/index.js"></script>
     </body>
+
 </html>

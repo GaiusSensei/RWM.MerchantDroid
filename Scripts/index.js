@@ -1,28 +1,30 @@
-﻿$(document).ready(function readyF() {
+$(document).ready(function readyF() {
     // Initialize stuff
     $('#signin').hide();
     $('#changepw').hide();
     $('#forgotpw').hide();
-    $('#txtMId').keypress(function (e) {
+    $('#txtMId').keypress(function(e) {
         if (e.which == 13) {
             $('#txtMPw').focus().click();
             return false;
         }
     });
-    $('#txtMPw').keypress(function (e) {
+    $('#txtMPw').keypress(function(e) {
         if (e.which == 13) {
             authSend();
             return false;
         }
     });
-    $('#signin, #changepw, #forgotpw').modal({
+    $('#signin, #changepw, #forgotpw, #pleaseWait').modal({
         backdrop: 'static',
         show: false
     });
     // Coupon Check
     refreshCouponCount();
     window.setInterval(function checkCouponsF() {
-        refreshCouponCount();
+        if ($.totalStorage('apiKey')) {
+            refreshCouponCount();
+        }
     }, 60000);
     // Silent Auth
     if (!$.totalStorage('apiKey')) {
@@ -44,7 +46,8 @@
         $("#btnLogAct").addClass("btn-success");
         $("#btnLogAct").text("Log In");
         showDiaInfo(":| You are not logged in.", "Click the Log In button above.");
-    } else {
+    }
+    else {
         // Log In
         $("#spnUser").text($.totalStorage('username'));
         $("#spnUserAction").text("Out");
@@ -64,7 +67,8 @@ var auth = function authF() {
         $('#diaSignin').hide();
         $('#signin').show();
         $('#signin').modal('show');
-    } else {
+    }
+    else {
         $.totalStorage('userId', null);
         $.totalStorage('apiKey', null);
         $.totalStorage('emailAdd', null);
@@ -84,7 +88,7 @@ var auth = function authF() {
         hideDiaInfo(":| Trading day is CLOSED!");
         showDiaInfo(":| You are not logged in.", "Click the Log In button above.");
     }
-}
+};
 
 var authSend = function authSendF() {
     $('#spnErr').hide();
@@ -100,7 +104,7 @@ var authSend = function authSendF() {
             'password': $("#txtMPw").val()
         }
     }, authSendDone);
-}
+};
 
 var authSendDone = function authSendDoneF(results) {
     var d = JSON.parse(results);
@@ -109,13 +113,14 @@ var authSendDone = function authSendDoneF(results) {
         $('#diaSignin').removeClass('alert-warn');
         $('#diaSignin').addClass('alert-error');
         $('#spnErr').show();
-    } else {
+    }
+    else {
         $.totalStorage('username', $("#txtMId").val());
-        $.totalStorage('userId', d.response['userId']);
-        $.totalStorage('apiKey', d.response['apiKey']);
-        $.totalStorage('emailAdd', d.response['emailAdd']);
-        $.totalStorage('CompIssueShift', d.response['CompIssueShift']);
-        $.totalStorage('ProfitCenterId', d.response['ProfitCenterId']);
+        $.totalStorage('userId', d.response.userId);
+        $.totalStorage('apiKey', d.response.apiKey);
+        $.totalStorage('emailAdd', d.response.emailAdd);
+        $.totalStorage('CompIssueShift', d.response.CompIssueShift);
+        $.totalStorage('ProfitCenterId', d.response.ProfitCenterId);
         $("#spnUser").text($.totalStorage('username'));
         $("#spnUserAction").text("Out");
         getTDD();
@@ -129,24 +134,27 @@ var authSendDone = function authSendDoneF(results) {
         $('#signin').modal('hide');
         $('#signin').hide();
     }
-}
+};
 
 var changePass = function changePassF() {
     $('#signin').modal('hide');
     $('#changepw').show();
     $('#changepw').modal('show');
     $("#txtCPwMId").val($("#txtMId").val());
-}
+};
 
 var changePassSend = function changePassSendF() {
     $('#changepw').modal('hide');
     if ($('#txtCPwMId').val().length < 1) {
         showAlrInfo("Something's wrong!", "Merchant Identifier is required. Please try again..");
-    } else if ($('#txtCPwNPw1').val().length < 6) {
+    }
+    else if ($('#txtCPwNPw1').val().length < 6) {
         showAlrInfo("Something's wrong!", "The new password is too short! At least six characters are required. Please try again..");
-    } else if ($('#txtCPwNPw1').val() !== $('#txtCPwNPw2').val()) {
+    }
+    else if ($('#txtCPwNPw1').val() !== $('#txtCPwNPw2').val()) {
         showAlrInfo("Something's wrong!", "The new passwords did not match! Please try again..");
-    } else {
+    }
+    else {
         phoenix.public({
             cgrp: '$merchants',
             cmnd: 'authChange',
@@ -158,29 +166,32 @@ var changePassSend = function changePassSendF() {
         }, function authChangedF(data) {
             var d = JSON.parse(data);
             if (d.exitCode === 0) {
-                showAlrInfo("Something's wrong!", d.response['error']);
-            } else {
+                showAlrInfo("Something's wrong!", d.response.error);
+            }
+            else {
                 showAlrInfo("Password Change Successful!", "You may now log in using the new credentials.");
             }
         });
     }
     $('#changepw').hide();
-}
+};
 
 var forgotPass = function forgotPassF() {
     $('#signin').modal('hide');
     $('#forgotpw').show();
     $('#forgotpw').modal('show');
     $("#txtFPWMId").val($("#txtMId").val());
-}
+};
 
 var forgotPassSend = function forgotPassSendF() {
     $('#forgotpw').modal('hide');
     if ($('#txtFPWMId').val().length < 1) {
         showAlrInfo("Something's wrong!", "Merchant Identifier is required. Please try again..");
-    } else if ($('#txtFPWMEa').val().length < 1) {
+    }
+    else if ($('#txtFPWMEa').val().length < 1) {
         showAlrInfo("Something's wrong!", "Merchant Email Address is required. Please try again..");
-    } else {
+    }
+    else {
         phoenix.public({
             cgrp: '$merchants',
             cmnd: 'authForgot',
@@ -191,14 +202,15 @@ var forgotPassSend = function forgotPassSendF() {
         }, function authChangedF(data) {
             var d = JSON.parse(data);
             if (d.exitCode === 0) {
-                showAlrInfo("Something's wrong!", d.response['error']);
-            } else {
+                showAlrInfo("Something's wrong!", d.response.error);
+            }
+            else {
                 showAlrInfo("New Password Generated!", "You may now log in using the new credentials sent to your email address.");
             }
         });
     }
     $('#forgotpw').hide();
-}
+};
 
 var getTDD = function getTDDF() {
     if ($.totalStorage('apiKey')) {
@@ -209,7 +221,7 @@ var getTDD = function getTDDF() {
             prms: {}
         }, getTDDDone);
     }
-}
+};
 
 var getTDDDone = function getTDDDoneF(data) {
     var d = JSON.parse(data);
@@ -219,31 +231,79 @@ var getTDDDone = function getTDDDoneF(data) {
         $("#spnTradingDay").text("Trading Day is CLOSED!");
         $("#btnCharge").attr("disabled", "disabled");
         showDiaInfo(":| Trading day is CLOSED!", "Merchants cannot charge GP when the Pit Trading is closed. Re-Log In to check again.");
-    } else {
+    }
+    else {
         $("#spnTradingDay").text("Trading Day: " + d.response['gtdd.ptd']);
     }
-}
+};
+
+var checkConnection = function checkConnectionF(callback) {
+    if ($.totalStorage('apiKey')) {
+        $('#pleaseWait').modal('show');
+        window.setTimeout(function delayed(){
+            if ($.totalStorage('TradingDayDate') !== getFormattedDate()) {
+                phoenix.userId = $.totalStorage('userId');
+                phoenix.apiKey = $.totalStorage('apiKey');
+                phoenix.send({
+                    cmnd: 'gtdd',
+                    prms: {}
+                }, function checkConnectionDoneF(data) {
+                    $('#pleaseWait').modal('hide');
+                    var d = JSON.parse(data);
+                    if (d.exitCode === 0) {
+                        showAlrInfo("Something's wrong!", d.response.error);
+                    }
+                    else {
+                        $.totalStorage('isTradingDayDateOpen', d.response['gtdd.pop']);
+                        $.totalStorage('TradingDayDate', d.response['gtdd.ptd']);
+                        if (d.response['gtdd.pop'] === '0') {
+                            showAlrInfo("Something's wrong!", "Merchants cannot charge GP when the Pit Trading is closed.");
+                        }
+                        else {
+                            callback();
+                        }
+                    }
+                });
+            } else {
+                $('#pleaseWait').modal('hide');
+                callback();
+            }
+        }, 1000);
+    }
+};
+
+var goToCharge = function goToChargeF() {
+    window.location = "\\charge.html";
+};
 
 var showDiaInfo = function showDiaInfoF(header, body) {
     $("#diaInfoHead").text(header);
     $("#diaInfoBody").text(body);
     $("#diaInfo").show();
     $("#diaInfo").addClass('in');
-}
+};
 
 var hideDiaInfo = function hideDiaInfoF(header) {
     if ($("#diaInfoHead").text() === header) {
         $("#diaInfo").removeClass('in');
         $("#diaInfo").hide();
     }
-}
+};
 
 var showAlrInfo = function showAlrInfoF(header, body) {
     $("#alrInfoHead").text(header);
     $("#alrInfoBody").text(body);
     $("#alrInfo").modal('show');
-}
+};
 
 var refreshCouponCount = function refreshCouponCountF() {
     $("#spnPendingCoupons").text("0");
+};
+
+var getFormattedDate = function getFormattedDateF() {
+    var now = new Date(),
+        yyyy = now.getFullYear().toString(),
+        mm = (now.getMonth() + 1).toString(), // getMonth() is zero-based
+        dd = now.getDate().toString();
+    return yyyy + '-' + (mm[1] ? mm : "0" + mm[0]) + '-' + (dd[1] ? dd : "0" + dd[0]);
 }
