@@ -1,10 +1,23 @@
 $(document).ready(function readyF() {
     // Initialize stuff
-    $('#diaTimeout').modal({
+    $('#diaTimeout, #diaCustVerify, #diaCustReceipt').modal({
         backdrop: 'static',
         show: false
     });    
-    $("#txtMerchant").text($.totalStorage('username'));
+    $(".txtMerchant").text($.totalStorage('username'));
+    $(".txtTradingDayDate").text($.totalStorage('TradingDayDate'));
+    $("#txtTradingDayDate").val($.totalStorage('TradingDayDate'));
+    $("#alrPinWait").hide();
+    $("#alrFunds").hide();
+    $("#txtCurrentDay").val(getFormattedDate());
+    $("#divBalance").mousedown(function balanceShowF(){
+        $('#txtOpenBal').text("000000.00 GP");
+        $('#txtCloseBal').text("000000.00 GP");
+    });
+    $("#divBalance").mouseup(function balanceHideF(){
+        $('#txtOpenBal').text("Touch this box to show.");
+        $('#txtCloseBal').text("Touch this box to show.");
+    });
     // Timeout after 20 minutes
     window.setInterval(function checkCouponsF() {
         $('#diaTimeout').modal('show');

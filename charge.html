@@ -8,7 +8,7 @@
         <link rel="Stylesheet" type="text/css" href="Content/bootstrap-responsive.min.css"/>
         <link rel="Stylesheet" type="text/css" href="Content/site.css" />
         <style type="text/css">
-            #diaTimeout
+            #diaTimeout, #diaCustVerify, #diaCustReceipt
             {
                 max-width: 300px;
                 padding: 19px 29px 29px;
@@ -24,18 +24,13 @@
             }
             #step1
             {
-                border-left: 5px solid #ff7878;
+                border-left: 5px solid #78ff78;
                 padding-left: 5px;
             }
             #step2
             {
                 border-right: 5px solid #7878ff;
                 padding-right: 5px;
-            }
-            #step3
-            {
-                border-left: 5px solid #78ff78;
-                padding-left: 5px;
             }
         </style>
     </head>    
@@ -56,7 +51,7 @@
                 <br />
                 <div class="row">
                     <blockquote class="pull-right" style="min-width:300px; overflow: hidden;">               
-                        <h2>Hello, <span id="txtMerchant">Merchant</span>!</h2>
+                        <h2>Hello, <span class="txtMerchant">Merchant</span>!</h2>
                         <small>We will now begin the complimentary issue process.<br/>
                         <span style="color:#ff7878;">This transaction will time out in twenty 
                         minutes.</span></small>
@@ -69,7 +64,7 @@
                     <form class="form-inline">
                         <p></p><label for="txtTradingDay"><strong>Trading Day
                             </strong></label>
-                        <input id="txtTradingDay" class="input-medium text-center pull-right" 
+                        <input id="txtTradingDayDate" class="input-medium text-center pull-right" 
                             type="text" placeholder="2013-01-01" disabled="disabled"></p>
                         <p><label for="txtCurrentDay"><strong>Current Date
                             </strong></label>
@@ -90,17 +85,44 @@
                     <p><strong>Step Two</strong>: Touch the button below and hand this device to the 
                     customer to give them a chance to enter their PIN, check their balance and the 
                     total bill value, and continue with the transaction.</p>
-                    <a href="#" onclick="custVerify();" class="btn btn-block btn-large btn-info disabled">
+                    <a href="#" onclick="custVerify();" class="btn btn-block btn-large btn-primary disabled">
                         Customer Verification</a>
                 </div>
                 <br />
-                <div class="row" id="step3">
-                    <p><strong>Step Three</strong>: Review the details above and make sure that they 
-                    are correct.touch the button below to send this transaction to Resorts World Manila.</p>
-                    <a href="#" onclick="merchVerify();" class="btn btn-block btn-large btn-success disabled">
-                        Merchant Verification</a>
-                </div>
             </div>
+        </div>
+        <!-- Customer Verification -->
+        <div id="diaCustVerify" class="container modal hide fade">
+            <div class="well well-small" style="background-color:#333;">
+                <img src="Images/logo.png" alt="Resorts World Manila" /></div>
+            <h4 class="text-center">Hello, <span id="custName">Customer Full [Name]</span>!<br/>
+                Enter your PIN below to continue with the transaction:</h4>
+            <input id="txtCustPIN" class="input-xlarge text-center" type="number" step="1"/>
+            <p><span class="txtMerchant">Merchant</span> is about to bill you for a total of:</p>
+            <div class="well well-small text-center" style="color:Red;"><h1 class="txtBillTotal">
+                000000.00 GP</h1></div>
+            <div id="alrPinWait" class="alert fade">Please wait...</div>
+            <a href="#" class="btn btn-danger btn-block btn-large" onclick="custPINVerify();">Verify PIN</a>            
+        </div>
+        <!-- Customer Reciept -->
+        <div id="diaCustReceipt" class="container modal hide fade">
+            <div class="well well-small" style="background-color:#333;">
+                <img src="Images/logo.png" alt="Resorts World Manila" />
+                <h3 class="text-center" style="color:White;">Transaction Receipt</h3></div>
+            <p>Merchant: <span class="txtMerchant pull-right"></span><br />
+                Trading Day Date: <span class="txtTradingDayDate pull-right"></span></p>
+            <div id="divBalance" class="well well-small">
+                Balance before<span id="txtOpenBal" class="pull-right">
+                    Touch this box to show.</span><br/>
+                <span class="txtMerchant"></span><strong class="pull-right">
+                -<span class="txtBillTotal">000000.00 GP</span></strong><br/>
+                <span class="pull-right">-----</span><br/>
+                Balance after<span id="txtCloseBal" class="pull-right">
+                    Touch this box to show.</span>
+            </div>
+            <div id="alrFunds" class="alert alert-error fade"><strong>Insufficient Funds!</strong></div>
+            <hr />
+            <a href="#" class="btn btn-block btn-large btn-success" onclick="custVerifyDone();">Proceed</a>
         </div>
         <!-- Timeout -->
         <div id="diaTimeout" class="container modal hide fade">

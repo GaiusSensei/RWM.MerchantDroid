@@ -213,13 +213,17 @@ var forgotPassSend = function forgotPassSendF() {
 };
 
 var getTDD = function getTDDF() {
-    if ($.totalStorage('apiKey')) {
-        phoenix.userId = $.totalStorage('userId');
-        phoenix.apiKey = $.totalStorage('apiKey');
-        phoenix.send({
-            cmnd: 'gtdd',
-            prms: {}
-        }, getTDDDone);
+    if ($.totalStorage('TradingDayDate') !== getFormattedDate()) {
+        if ($.totalStorage('apiKey')) {
+            phoenix.userId = $.totalStorage('userId');
+            phoenix.apiKey = $.totalStorage('apiKey');
+            phoenix.send({
+                cmnd: 'gtdd',
+                prms: {}
+            }, getTDDDone);
+        }
+    } else {
+        $("#spnTradingDay").text("Trading Day: " + $.totalStorage('TradingDayDate'));
     }
 };
 
