@@ -36,6 +36,8 @@ $(document).ready(function readyF() {
         $.totalStorage('ProfitCenterId', null);
         $.totalStorage('isTradingDayDateOpen', null);
         $.totalStorage('TradingDayDate', null);
+        $.totalStorage('FormPrinterCIL', null);
+        $.totalStorage('AccountingCIL', null);
         $("#spnUser").text('Guest');
         $("#spnUserAction").text('In');
         $("#spnTradingDay").text("Trading Day is CLOSED!");
@@ -76,6 +78,8 @@ var auth = function authF() {
         $.totalStorage('ProfitCenterId', null);
         $.totalStorage('isTradingDayDateOpen', null);
         $.totalStorage('TradingDayDate', null);
+        $.totalStorage('FormPrinterCIL', null);
+        $.totalStorage('AccountingCIL', null);
         $("#spnUser").text('Guest');
         $("#spnUserAction").text('In');
         $("#spnTradingDay").text("Trading Day is CLOSED!");
@@ -121,6 +125,8 @@ var authSendDone = function authSendDoneF(results) {
         $.totalStorage('emailAdd', d.response.emailAdd);
         $.totalStorage('CompIssueShift', d.response.CompIssueShift);
         $.totalStorage('ProfitCenterId', d.response.ProfitCenterId);
+        $.totalStorage('FormPrinterCIL', d.response.FormPrinterCIL);
+        $.totalStorage('AccountingCIL', d.response.AccountingCIL);
         $("#spnUser").text($.totalStorage('username'));
         $("#spnUserAction").text("Out");
         getTDD();

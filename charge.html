@@ -73,7 +73,7 @@
                         <p><label for="txtCustomerId"><strong>Customer Identifier
                             </strong></label>
                         <input id="txtCustomerId" class="input-medium text-center pull-right" 
-                            placeholder="9000000000" type="text" /></p>                  
+                            placeholder="2000000000" type="text" /></p>                  
                         <p><label for="txtBillValue"><strong>Total Bill Value
                             </strong></label>
                         <input id="txtBillValue" class="input-medium text-center pull-right" 
@@ -85,7 +85,8 @@
                     <p><strong>Step Two</strong>: Touch the button below and hand this device to the 
                     customer to give them a chance to enter their PIN, check their balance and the 
                     total bill value, and continue with the transaction.</p>
-                    <a href="#" onclick="custVerify();" class="btn btn-block btn-large btn-primary disabled">
+                    <a href="#" onclick="custVerify();" id="btnCustVerify"
+                        class="btn btn-block btn-large btn-primary disabled">
                         Customer Verification</a>
                 </div>
                 <br />
@@ -95,18 +96,18 @@
         <div id="diaCustVerify" class="container modal hide fade">
             <div class="well well-small" style="background-color:#333;">
                 <img src="Images/logo.png" alt="Resorts World Manila" /></div>
-            <h4 class="text-center">Hello, <span id="custName">Customer Full [Name]</span>!<br/>
-                Enter your PIN below to continue with the transaction:</h4>
+            <h4 class="text-center">Hello, <span id="custName">Customer Full [Name]</span>!</h4>
+            <p>Enter your PIN to continue the transaction:</p>
             <input id="txtCustPIN" class="input-xlarge text-center" type="number" step="1"/>
             <p><span class="txtMerchant">Merchant</span> is about to bill you for a total of:</p>
             <div class="well well-small text-center" style="color:Red;"><h1 class="txtBillTotal">
                 000000.00 GP</h1></div>
-            <div id="alrPinWait" class="alert fade">Please wait...</div>
-            <a href="#" class="btn btn-danger btn-block btn-large" onclick="custPINVerify();">Verify PIN</a>            
+            <a href="#" class="btn btn-primary btn-block btn-large disabled" id="btnCustPINVerify"
+                onclick="custPINVerify();">Verify PIN</a>            
         </div>
         <!-- Customer Reciept -->
         <div id="diaCustReceipt" class="container modal hide fade">
-            <div class="well well-small" style="background-color:#333;">
+            <div id="hiddenExit" class="well well-small" style="background-color:#333;">
                 <img src="Images/logo.png" alt="Resorts World Manila" />
                 <h3 class="text-center" style="color:White;">Transaction Receipt</h3></div>
             <p>Merchant: <span class="txtMerchant pull-right"></span><br />
@@ -120,9 +121,9 @@
                 Balance after<span id="txtCloseBal" class="pull-right">
                     Touch this box to show.</span>
             </div>
-            <div id="alrFunds" class="alert alert-error fade"><strong>Insufficient Funds!</strong></div>
             <hr />
-            <a href="#" class="btn btn-block btn-large btn-success" onclick="custVerifyDone();">Proceed</a>
+            <a href="#" id="btnCompIssue" class="btn btn-block btn-large" 
+                onclick="custVerifyDone();">Proceed</a>
         </div>
         <!-- Timeout -->
         <div id="diaTimeout" class="container modal hide fade">
@@ -133,6 +134,10 @@
                 <button class="btn btn-block" onclick="window.location = 'index.html';">
                     Okay</button>
             </p>
+        </div>
+        <!-- Hidden Form -->
+        <div style="display:none">
+            <span id="txtHidden"></span>
         </div>
         <!-- Scripts -->
         <script src="phonegap.js"></script>
