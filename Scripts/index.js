@@ -273,7 +273,7 @@ var checkConnection = function checkConnectionF(callback) {
 };
 
 var goToCharge = function goToChargeF() {
-    window.location = "\\charge.html";
+    window.location = "charge.html";
 };
 
 var showDiaInfo = function showDiaInfoF(header, body) {

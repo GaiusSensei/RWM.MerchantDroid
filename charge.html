@@ -7,10 +7,112 @@
         <link rel="Stylesheet" type="text/css" href="Content/bootstrap.min.css"/>
         <link rel="Stylesheet" type="text/css" href="Content/bootstrap-responsive.min.css"/>
         <link rel="Stylesheet" type="text/css" href="Content/site.css" />
-    </head>
-    
+        <style type="text/css">
+            #diaTimeout
+            {
+                max-width: 300px;
+                padding: 19px 29px 29px;
+                margin: 0 auto 20px;
+                background-color: #fff;
+                border: 1px solid #e5e5e5;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                border-radius: 5px;
+                -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+                -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+                box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+            }
+            #step1
+            {
+                border-left: 5px solid #ff7878;
+                padding-left: 5px;
+            }
+            #step2
+            {
+                border-right: 5px solid #78ff78;
+                padding-right: 5px;
+            }
+            #step3
+            {
+                border-left: 5px solid #7878ff;
+                padding-left: 5px;
+            }
+        </style>
+    </head>    
     <body>
-        
+        <!-- Navbar -->
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <p class="brand">RWM • Merchants</p>  
+                <form class="navbar-form pull-right">
+                    <a class="btn" href="#" style="padding-top:6px;" 
+                        onclick="window.location = 'index.html';">Back</a>
+                </form>
+            </div>
+        </div>
+        <!-- Body -->
+        <div class="row-fluid">
+            <div class="span4 offset4">
+                <br />
+                <div class="row">
+                    <blockquote class="pull-right" style="min-width:300px; overflow: hidden;">               
+                        <h2>Hello, <span id="txtMerchant">Merchant</span>!</h2>
+                        <small>We will now begin the complimentary issue process.<br/>
+                        <span style="color:#ff7878;">This transaction will time out in twenty 
+                        minutes.</span></small>
+                    </blockquote>
+                </div>
+                <div class="row" id="step1">
+                    <p><strong>Step One</strong>: Confirm that the following 
+                    parameters are correct, and enter the customer's RWM 
+                    Customer Id as well as the total bill value below.</p>
+                    <form class="form-inline">
+                        <p></p><label for="txtTradingDay"><strong>Trading Day
+                            </strong></label>
+                        <input id="txtTradingDay" class="input-medium text-center pull-right" 
+                            type="text" placeholder="2013-01-01" disabled="disabled"></p>
+                        <p><label for="txtCurrentDay"><strong>Current Date
+                            </strong></label>
+                        <input id="txtCurrentDay" class="input-medium text-center pull-right" 
+                            type="text" placeholder="2013-01-01" disabled="disabled"></p>                        
+                        <p><label for="txtCustomerId"><strong>Customer Identifier
+                            </strong></label>
+                        <input id="txtCustomerId" class="input-medium text-center pull-right" 
+                            placeholder="9000000000" type="text" /></p>                  
+                        <p><label for="txtBillValue"><strong>Total Bill Value
+                            </strong></label>
+                        <input id="txtBillValue" class="input-medium text-center pull-right" 
+                            placeholder="1000.00" type="text" /></p>
+                    </form>
+                </div>
+                <br />
+                <div class="row" id="step2">
+                    <p>Hello, World!</p>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                </div>
+                <br />
+                <div class="row" id="step3">
+                    <p>Hello, World!</p>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <!-- Timeout -->
+        <div id="diaTimeout" class="container modal hide fade">
+            <h3>Your session has expired!</h3>
+            <p>Unfortunately, each transaction can only take 
+            a maximum of 20 minutes. Please try again.</p>
+            <p>
+                <button class="btn btn-block" onclick="window.location = 'index.html';">
+                    Okay</button>
+            </p>
+        </div>
         <!-- Scripts -->
         <script src="phonegap.js"></script>
         <script type="text/javascript" src="Scripts/jQuery/jquery-1.9.1.min.js"></script>
