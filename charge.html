@@ -29,12 +29,12 @@
             }
             #step2
             {
-                border-right: 5px solid #78ff78;
+                border-right: 5px solid #7878ff;
                 padding-right: 5px;
             }
             #step3
             {
-                border-left: 5px solid #7878ff;
+                border-left: 5px solid #78ff78;
                 padding-left: 5px;
             }
         </style>
@@ -87,19 +87,18 @@
                 </div>
                 <br />
                 <div class="row" id="step2">
-                    <p>Hello, World!</p>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
+                    <p><strong>Step Two</strong>: Touch the button below and hand this device to the 
+                    customer to give them a chance to enter their PIN, check their balance and the 
+                    total bill value, and continue with the transaction.</p>
+                    <a href="#" onclick="custVerify();" class="btn btn-block btn-large btn-info disabled">
+                        Customer Verification</a>
                 </div>
                 <br />
                 <div class="row" id="step3">
-                    <p>Hello, World!</p>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
+                    <p><strong>Step Three</strong>: Review the details above and make sure that they 
+                    are correct.touch the button below to send this transaction to Resorts World Manila.</p>
+                    <a href="#" onclick="merchVerify();" class="btn btn-block btn-large btn-success disabled">
+                        Merchant Verification</a>
                 </div>
             </div>
         </div>
