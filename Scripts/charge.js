@@ -8,13 +8,13 @@ $(document).ready(function readyF() {
     $(".txtTradingDayDate").text($.totalStorage('TradingDayDate'));
     $("#txtTradingDayDate").val($.totalStorage('TradingDayDate'));
     $("#txtCurrentDay").val(getFormattedDate());
-    $("#divBalance").mousedown(function balanceShowF() {
+    $("#divBalance").on("mousedown touchstart", function balanceShowF() {
         $('#txtOpenBal').text(parseFloat($('#txtHidden').text()).toFixed(2) + " GP");
         $('#txtCloseBal').text(
             (parseFloat($('#txtHidden').text()) - parseFloat($("#txtBillValue").val())).toFixed(2)
             + " GP");
     });
-    $("#divBalance").mouseup(function balanceHideF() {
+    $("#divBalance").on("mouseup touchend", function balanceHideF() {
         $('#txtOpenBal').text("Touch this box to show.");
         $('#txtCloseBal').text("Touch this box to show.");
     });
@@ -107,7 +107,6 @@ var custPINVerify = function custPINVerifyF() {
     $('#btnCustPINVerify').removeClass('btn-primary');
     $('#btnCustPINVerify').addClass('btn-warning');
     $('#btnCustPINVerify').text("Please wait..");
-    $('#txtCustPIN').select();
     phoenix.send({
         cgrp: '$members',
         cmnd: 'login',
@@ -132,13 +131,15 @@ var custPINVerify = function custPINVerifyF() {
             } else {
                 $('#btnCompIssue').addClass('btn-danger');
                 $('#btnCompIssue').text('Insufficient Funds!');                
-            }
+            }            
             $('#diaCustReceipt').modal('show');
         }
     });    
 };
 
 var custVerifyDone = function custVerifyDoneF() {
+    if ($('#btnCompIssue').text().indexOf("Success!") !== -1)
+        return;
     if (!$('#btnCompIssue').hasClass('btn-success')) {
         $('#btnCustVerify').text("Customer Verification");
         $('#btnCustVerify').removeClass('disabled');
@@ -147,6 +148,9 @@ var custVerifyDone = function custVerifyDoneF() {
         $('#txtCustPIN').val('');
         $('#diaCustReceipt').modal('hide');
         return;        
+    } else {
+        $('#btnCompIssue').removeClass('disabled');
+        $('#btnCompIssue').text("Verify PIN");        
     }
     phoenix.send({
         cgrp: 'comp',
@@ -171,7 +175,8 @@ var custVerifyDone = function custVerifyDoneF() {
             $('#btnCompIssue').text(d.response.error);
         }
         else {
-            $('#btnCompIssue').text("Success! Doc#" + d.response.dno);
+            $('#btnCompIssue').text("Success! Doc#" + d.response['comp.issue.dno');
+            $('#btnCompIssue').addClass('disabled');
         }
     });  
     $('#hiddenExit').attr('onclick','window.location = "index.html";')
