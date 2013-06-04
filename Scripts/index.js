@@ -1,5 +1,8 @@
 $(document).ready(function readyF() {
     // Initialize stuff
+    document.addEventListener("backbutton", function backKeyDownF() {
+        navigator.app.exitApp();
+    }, true);
     $('#signin').hide();
     $('#changepw').hide();
     $('#forgotpw').hide();
@@ -19,13 +22,6 @@ $(document).ready(function readyF() {
         backdrop: 'static',
         show: false
     });
-    // Coupon Check
-    refreshCouponCount();
-    window.setInterval(function checkCouponsF() {
-        if ($.totalStorage('apiKey')) {
-            refreshCouponCount();
-        }
-    }, 60000);
     // Silent Auth
     if (!$.totalStorage('apiKey')) {
         // Log Out
@@ -42,7 +38,7 @@ $(document).ready(function readyF() {
         $("#spnUserAction").text('In');
         $("#spnTradingDay").text("Trading Day is CLOSED!");
         $("#btnCharge").attr("disabled", "disabled");
-        $("#btnCoupons").attr("disabled", "disabled");
+        $("#btnVouchers").attr("disabled", "disabled");
         $("#btnReports").attr("disabled", "disabled");
         $("#btnLogAct").removeClass("btn-warning");
         $("#btnLogAct").addClass("btn-success");
@@ -55,7 +51,7 @@ $(document).ready(function readyF() {
         $("#spnUserAction").text("Out");
         getTDD();
         $("#btnCharge").attr("disabled", null);
-        $("#btnCoupons").attr("disabled", null);
+        $("#btnVouchers").attr("disabled", null);
         $("#btnReports").attr("disabled", null);
         $("#btnLogAct").removeClass("btn-success");
         $("#btnLogAct").addClass("btn-warning");
@@ -84,7 +80,7 @@ var auth = function authF() {
         $("#spnUserAction").text('In');
         $("#spnTradingDay").text("Trading Day is CLOSED!");
         $("#btnCharge").attr("disabled", "disabled");
-        $("#btnCoupons").attr("disabled", "disabled");
+        $("#btnVouchers").attr("disabled", "disabled");
         $("#btnReports").attr("disabled", "disabled");
         $("#btnLogAct").removeClass("btn-warning");
         $("#btnLogAct").addClass("btn-success");
@@ -131,7 +127,7 @@ var authSendDone = function authSendDoneF(results) {
         $("#spnUserAction").text("Out");
         getTDD();
         $("#btnCharge").attr("disabled", null);
-        $("#btnCoupons").attr("disabled", null);
+        $("#btnVouchers").attr("disabled", null);
         $("#btnReports").attr("disabled", null);
         $("#btnLogAct").removeClass("btn-success");
         $("#btnLogAct").addClass("btn-warning");
@@ -304,10 +300,6 @@ var showAlrInfo = function showAlrInfoF(header, body) {
     $("#alrInfoHead").text(header);
     $("#alrInfoBody").text(body);
     $("#alrInfo").modal('show');
-};
-
-var refreshCouponCount = function refreshCouponCountF() {
-    $("#spnPendingCoupons").text("0");
 };
 
 var getFormattedDate = function getFormattedDateF() {

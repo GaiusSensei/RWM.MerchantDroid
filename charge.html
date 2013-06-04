@@ -94,7 +94,7 @@
         </div>
         <!-- Customer Verification -->
         <div id="diaCustVerify" class="container modal hide fade">
-            <div class="well well-small" style="background-color:#333;">
+            <div class="well well-small" style="background-color:#333;" onclick="cancelTrans();">
                 <img src="Images/logo.png" alt="Resorts World Manila" /></div>
             <h4 class="text-center">Hello, <span id="custName">Customer Full [Name]</span>!</h4>
             <p>Enter your PIN to continue the transaction:</p>
@@ -107,7 +107,8 @@
         </div>
         <!-- Customer Reciept -->
         <div id="diaCustReceipt" class="container modal hide fade">
-            <div id="hiddenExit" class="well well-small" style="background-color:#333;">
+            <div id="hiddenExit" class="well well-small" style="background-color:#333;"
+                onclick="cancelTrans();">
                 <img src="Images/logo.png" alt="Resorts World Manila" />
                 <h3 class="text-center" style="color:White;">Transaction Receipt</h3></div>
             <p>Merchant: <span class="txtMerchant pull-right"></span><br />
@@ -122,6 +123,8 @@
                     Touch this box to show.</span>
             </div>
             <hr />
+            <p>If you wish to cancel this transaction, please hand this device to the merchant 
+                <strong style="color:red;">WITHOUT</strong> clicking the proceed button below.</p>
             <a href="#" id="btnCompIssue" class="btn btn-block btn-large" 
                 onclick="custVerifyDone();">Proceed</a>
         </div>

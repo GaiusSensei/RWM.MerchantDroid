@@ -1,5 +1,8 @@
 $(document).ready(function readyF() {
     // Initialize stuff
+    document.addEventListener("backbutton", function backKeyDownF() {
+        // Ignore backbutton.
+    }, true);
     $('#diaTimeout, #diaCustVerify, #diaCustReceipt').modal({
         backdrop: 'static',
         show: false
@@ -9,10 +12,12 @@ $(document).ready(function readyF() {
     $("#txtTradingDayDate").val($.totalStorage('TradingDayDate'));
     $("#txtCurrentDay").val(getFormattedDate());
     $("#divBalance").on("mousedown touchstart", function balanceShowF() {
-        $('#txtOpenBal').text(parseFloat($('#txtHidden').text()).toFixed(2) + " GP");
-        $('#txtCloseBal').text(
-            (parseFloat($('#txtHidden').text()) - parseFloat($("#txtBillValue").val())).toFixed(2)
-            + " GP");
+        if (!$('#btnCompIssue').hasClass('disabled')) {
+            $('#txtOpenBal').text(parseFloat($('#txtHidden').text()).toFixed(2) + " GP");
+            $('#txtCloseBal').text(
+                (parseFloat($('#txtHidden').text()) - parseFloat($("#txtBillValue").val())).toFixed(2)
+                + " GP");
+        }
     });
     $("#divBalance").on("mouseup touchend", function balanceHideF() {
         $('#txtOpenBal').text("Touch this box to show.");
@@ -146,6 +151,9 @@ var custVerifyDone = function custVerifyDoneF() {
         $('#btnCustVerify').removeClass('disabled');
         $('#btnCustPINVerify').text("Verify PIN");
         $('#btnCustPINVerify').removeClass('disabled');
+        $('#btnCustPINVerify').removeClass('btn-warning');
+        $('#btnCustPINVerify').removeClass('btn-danger');
+        $('#btnCustPINVerify').addClass('btn-primary');
         $('#btnCompIssue').removeClass('disabled');
         $('#btnCompIssue').text("Proceed");        
         $('#txtCustPIN').val('');
@@ -170,6 +178,7 @@ var custVerifyDone = function custVerifyDoneF() {
     }, function callbackF(data) {
         var d = JSON.parse(data);
         if (d.exitCode === 0) {
+            $('#btnCompIssue').removeClass('disabled');
             $('#btnCompIssue').removeClass('btn-success');
             $('#btnCompIssue').addClass('btn-danger');
             $('#btnCompIssue').text(d.response.error);
@@ -179,4 +188,20 @@ var custVerifyDone = function custVerifyDoneF() {
             $('#hiddenExit').attr('onclick','window.location = "index.html";');
         }
     });  
+};
+
+var cancelTrans = function cancelTransF() {
+    $('#btnCustVerify').text("Customer Verification");
+    $('#btnCustVerify').removeClass('disabled');
+    $('#btnCustPINVerify').text("Verify PIN");
+    $('#btnCustPINVerify').removeClass('disabled');
+    $('#btnCustPINVerify').removeClass('btn-warning');
+    $('#btnCustPINVerify').removeClass('btn-danger');
+    $('#btnCustPINVerify').addClass('btn-primary');
+    $('#btnCompIssue').removeClass('disabled');
+    $('#btnCompIssue').text("Proceed");        
+    $('#txtCustPIN').val('');
+    $('#diaCustVerify').modal('hide');
+    $('#diaCustReceipt').modal('hide');
+    return;    
 };
