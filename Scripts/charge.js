@@ -138,19 +138,19 @@ var custPINVerify = function custPINVerifyF() {
 };
 
 var custVerifyDone = function custVerifyDoneF() {
-    if ($('#btnCompIssue').text().indexOf("Success!") !== -1)
+    if ($('#btnCompIssue').hasClass('disabled'))
         return;
+    $('#btnCompIssue').addClass('disabled');
     if (!$('#btnCompIssue').hasClass('btn-success')) {
         $('#btnCustVerify').text("Customer Verification");
         $('#btnCustVerify').removeClass('disabled');
         $('#btnCustPINVerify').text("Verify PIN");
         $('#btnCustPINVerify').removeClass('disabled');
+        $('#btnCompIssue').removeClass('disabled');
+        $('#btnCompIssue').text("Proceed");        
         $('#txtCustPIN').val('');
         $('#diaCustReceipt').modal('hide');
-        return;        
-    } else {
-        $('#btnCompIssue').removeClass('disabled');
-        $('#btnCompIssue').text("Verify PIN");        
+        return;
     }
     phoenix.send({
         cgrp: 'comp',
@@ -175,9 +175,8 @@ var custVerifyDone = function custVerifyDoneF() {
             $('#btnCompIssue').text(d.response.error);
         }
         else {
-            $('#btnCompIssue').text("Success! Doc#" + d.response['comp.issue.dno');
-            $('#btnCompIssue').addClass('disabled');
+            $('#btnCompIssue').text("Success! Doc#" + d.response['comp.issue.dno']);
+            $('#hiddenExit').attr('onclick','window.location = "index.html";');
         }
     });  
-    $('#hiddenExit').attr('onclick','window.location = "index.html";')
 };
