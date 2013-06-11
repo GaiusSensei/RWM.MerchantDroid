@@ -17,8 +17,7 @@ $(document).ready(function readyF() {
 });
 
 var tryScan = function tryScanF() {
-    var scanner = cordova.require("cordova/plugin/BarcodeScanner");
-    scanner.scan(    
+    window.plugins.barcodeScanner.scan(    
         function(result) {
             alert("We got a barcode\n" + 
                 "Result: " + result.text + "\n" + 
