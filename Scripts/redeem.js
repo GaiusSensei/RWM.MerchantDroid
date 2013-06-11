@@ -23,7 +23,7 @@ var tryScan = function tryScanF() {
                 // process result.text
                 var ar = result.text.split(' '),
                     rxCid = /2\d{9}/,
-                    Cid, Vid;
+                    Cid, Vno;
                 for (var i = 0; i < ar.length; i++) {
                     if (rxCid.test(ar[i])) {
                         Cid = ar[i];
@@ -33,12 +33,12 @@ var tryScan = function tryScanF() {
                 var Cid4 = Cid.substr(Cid.length - 4) 
                 for (var i = 0; i < ar.length; i++) {
                     if ((ar[i] !== Cid) && (ar[i].indexOf(Cid4) !== -1)) {
-                        Vid = ar[i];
+                        Vno = ar[i];
                         break;
                     }        
                 };
                 $("#txtCid").val(Cid);
-                $("#txtVid").val(Vid);
+                $("#txtVno").val(Vno);
             } else {
                 alert("Scanning failed: User Cancelled Scanner.");
             }
