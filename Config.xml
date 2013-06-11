@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns = "http://www.w3.org/ns/widgets"
+    xmlns:gap = "http://phonegap.com/ns/1.0"
+    id        = "com.phonegap.example"
+    versionCode="10" 
+    version   = "1.0.0">
+
+    <!-- versionCode is optional and Android only -->
+    
+    <name>RWManila Merchants</name>
+    
+    <description>
+        Resorts World Manila Merchants App.
+    </description>
+    
+    <author href="http://www.rwmanila.com" email="erik.capistrano@rwmanila.com">
+        Resorts World Manila 
+    </author>
+    
+    <preference name="phonegap-version" value="2.7.0" />
+    <preference name="webviewbounce" value="false" />    
+    <preference name="permissions" value="none"/>
+    
+    <feature name="http://api.phonegap.com/1.0/camera"/>
+    <gap:plugin name="BarcodeScanner" /> 
+</widget>

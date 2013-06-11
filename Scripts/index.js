@@ -282,6 +282,11 @@ var goToCharge = function goToChargeF() {
     window.location = "charge.html";
 };
 
+var goToRedeem = function goToRedeemF() {
+    window.location = "redeem.html";
+};
+
+
 var showDiaInfo = function showDiaInfoF(header, body) {
     $("#diaInfoHead").text(header);
     $("#diaInfoBody").text(body);
