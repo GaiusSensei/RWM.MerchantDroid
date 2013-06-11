@@ -18,13 +18,32 @@ $(document).ready(function readyF() {
 
 var tryScan = function tryScanF() {
     window.plugins.barcodeScanner.scan(    
-        function(result) {
-            alert("We got a barcode\n" + 
-                "Result: " + result.text + "\n" + 
-                "Format: " + result.format + "\n" + 
-                "Cancelled: " + result.cancelled);
+        function scanGoodF(result) {
+            if (!result.cancelled) {
+                // process result.text
+                var ar = result.text.split(' '),
+                    rxCid = /2\d{9}/,
+                    Cid, Vid;
+                for (var i = 0; i < ar.length; i++) {
+                    if (rxCid.test(ar[i])) {
+                        Cid = ar[i];
+                        break;
+                    }        
+                };                
+                var Cid4 = Cid.substr(Cid.length - 4) 
+                for (var i = 0; i < ar.length; i++) {
+                    if ((ar[i] !== Cid) && (ar[i].indexOf(Cid4) !== -1)) {
+                        Vid = ar[i];
+                        break;
+                    }        
+                };
+                $("#txtCid").val(Cid);
+                $("#txtVid").val(Vid);
+            } else {
+                alert("Scanning failed: User Cancelled Scanner.");
+            }
         },    
-        function(error) {
+        function scanBadF(error) {
             alert("Scanning failed: " + error);
         });
 };
