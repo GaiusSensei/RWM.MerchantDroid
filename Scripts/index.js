@@ -245,6 +245,7 @@ var getTDDDone = function getTDDDoneF(data) {
 
 var checkConnection = function checkConnectionF(callback) {
     if ($.totalStorage('apiKey')) {
+        $('#txtPleaseWait').text("Checking conection to Resorts World Manila..");
         $('#pleaseWait').modal('show');
         window.setTimeout(function delayed(){
             if ($.totalStorage('TradingDayDate') !== getFormattedDate()) {
@@ -286,6 +287,32 @@ var goToRedeem = function goToRedeemF() {
     window.location = "redeem.html";
 };
 
+var goToReport = function goToReportF() {
+    $('#txtPleaseWait').text("Retrieving today's transactions..");    
+    phoenix.userId = $.totalStorage('userId');
+    phoenix.apiKey = $.totalStorage('apiKey');
+    phoenix.send({
+        cgrp:'$merchants',
+        cmnd:'getTransReports',
+        prms:{
+            'pci':$.totalStorage('ProfitCenterId'),
+            'filter':'today',
+            'startRange':'',
+            'endRange':'',
+        }
+    }, function callbackF(data) {
+        var d = JSON.parse(data);
+        if (d.exitCode === 0) {
+            alert(JSON.stringify("Something's wrong! There may be zero transactions yet today. " 
+                + d.response.error));
+            $.totalStorage('currentReport', null);
+            window.location = "report.html";   
+        } else {
+            $.totalStorage('currentReport', d);
+            window.location = "report.html";            
+        }
+    });
+};
 
 var showDiaInfo = function showDiaInfoF(header, body) {
     $("#diaInfoHead").text(header);

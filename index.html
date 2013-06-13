@@ -68,7 +68,8 @@
                             onclick="checkConnection(goToRedeem);">Redeem Voucher</button>
                     </p>
                     <p>
-                        <button id="btnReports" class="btn btn-block btn-large" disabled="disabled">Reports</button>
+                        <button id="btnReports" class="btn btn-block btn-large" disabled="disabled"
+                            onclick="checkConnection(goToReport);">Reports</button>
                     </p>
                     <p>
                         <button id="btnLogAct" class="btn btn-block btn-large btn-success" onclick="auth();">Log In</button>
@@ -140,7 +141,7 @@
         </div>
         <!-- Please Wait -->
         <div id="pleaseWait" class="container-fluid modal hide fade">
-            <h3>Checking conection to Resorts World Manila..</h3>
+            <h3 id="txtPleaseWait">Checking conection to Resorts World Manila..</h3>
             <img style="display:block; margin:0 auto;" src="Images/wait.gif" alt="Please Wait.."
             />
         </div>

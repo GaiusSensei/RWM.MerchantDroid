@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <title>Resorts World Manila</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="Stylesheet" type="text/css" href="Content/bootstrap.min.css"/>
+        <link rel="Stylesheet" type="text/css" href="Content/bootstrap-responsive.min.css"/>
+        <link rel="Stylesheet" type="text/css" href="Content/site.css" />
+        <style type="text/css">
+            #diaTimeout
+            {
+                max-width: 300px;
+                padding: 19px 29px 29px;
+                margin: 0 auto 20px;
+                background-color: #fff;
+                border: 1px solid #e5e5e5;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                border-radius: 5px;
+                -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+                -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+                box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+            }      
+        </style>
+    </head>
+    <body>
+        <!-- Navbar -->
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <p class="brand">RWM • Merchants</p>  
+                <form class="navbar-form pull-right">
+                    <a class="btn" href="#" style="padding-top:6px;" 
+                        onclick="window.location = 'index.html';">Back</a>
+                </form>
+            </div>
+        </div>
+        <!-- Body -->
+        <br />
+        <div class="well well-small">
+            Filter: <strong id="txtFilter">Today's Transactions</strong>
+                <a href="#" class="pull-right">Change</a>
+        </div>
+        
+        <!-- Scripts -->
+        <script src="phonegap.js"></script>
+        <script type="text/javascript" src="Scripts/jQuery/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="Scripts/jQuery/jquery.total-storage.min.js"></script>
+        <script type="text/javascript" src="Scripts/Bootstrap/bootstrap.min.js"></script>
+        <script type="text/javascript" src="Scripts/Phoenix/rwmapi-1.0.4.js"></script>
+        <script type="text/javascript" src="Scripts/report.js"></script>
+    </body>
+</html>
