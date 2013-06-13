@@ -9,7 +9,7 @@
         <link rel="Stylesheet" type="text/css" href="Content/bootstrap-responsive.min.css"/>
         <link rel="Stylesheet" type="text/css" href="Content/site.css" />
         <style type="text/css">
-            #diaTimeout
+            #diaTimeout, #diaNoGood, #diaGood
             {
                 max-width: 300px;
                 padding: 19px 29px 29px;
@@ -56,16 +56,17 @@
                 <div class="row" id="step1">
                     <p>Please enter the Customer's 10-digit Id and Voucher Number below:
                     <a href="#" class="pull-right btn btn-mini btn-warning" style="margin-top:2px;"
-                        onclick="tryScan();">Try Scanning the Card.</a></p>
+                        onclick="tryScan();">Scan the QR Code!</a></p>
                     <form class="form-inline">
                         <p><label for="txtCid">Customer Id</label>
                             <input id="txtCid" type="text" class="text-center input-block-level" 
                             placeholder="2000000000"/></p>
                         <p><label for="txtVno">Voucher Number</label>
                             <input id="txtVno" type="text" class="text-center input-block-level" 
-                            placeholder="ABC123XYZ000321"/></p>
+                            placeholder="ABC123XYZ9774001"/></p>
                     </form>
-                    <a href="#" class="btn btn-block btn-large btn-primary disabled">Test</a>
+                    <a id="btnCheck" href="#" class="btn btn-block btn-large btn-primary disabled" 
+                        onclick="check();">Check Voucher</a>
                 </div>
                 <br />
             </div>
@@ -79,6 +80,37 @@
                 <button class="btn btn-block" onclick="window.location = 'index.html';">
                     Okay</button>
             </p>
+        </div>
+        <!-- NoGood -->
+        <div id="diaNoGood" class="container modal hide fade">
+            <h3 id="txtNoGoodHead">Sorry!</h3>
+            <p id="txtNoGoodBody">This voucher is invalid or has already been redeemed.</p>
+            <p>
+                <button class="btn btn-block" onclick="window.location = 'index.html';">
+                    Back to Main Menu</button>
+            </p>            
+        </div>
+        <!-- Good -->
+        <div id="diaGood" class="container modal hide fade">
+            <div class="well well-small" style="background-color:#333;">
+                <img src="Images/logo.png" alt="Resorts World Manila" />
+                <h3 class="text-center" style="color:White;">Congratulations!</h3></div>
+            <h4><span id="txtCnm1">Someone</span> is entitled for
+                <em id="txtEntitlement1">Something</em>!</h4>     
+            <hr />
+            <p><strong>Customer Id</strong>: <span id="txtCidDetail">2000000000</span><br />
+                <strong>Customer Name</strong>: <span id="txtCnm2">Someone</span><br />
+                <strong>Entitlement</strong>: <span id="txtEntitlement2">Something</span><br />
+                <strong>Event</strong>: <span id="txtEvent">Somewhere</span><br />
+                <strong>Date Won</strong>: <span id="txtTransDate">Sometime</span>
+            </p>
+            <sup>Please make sure that this voucher is for this merchant. Thank You.</sup>
+            <p>
+                <button id="btnRedeem" class="btn btn-block btn-primary" onclick="redeem();">
+                    Redeem Voucher</button>
+                <button class="btn btn-block" onclick="window.location = 'index.html';">
+                    Back to Main Menu</button>
+            </p>            
         </div>
         <!-- Scripts -->
         <script src="phonegap.js"></script>
