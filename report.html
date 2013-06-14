@@ -9,7 +9,7 @@
         <link rel="Stylesheet" type="text/css" href="Content/bootstrap-responsive.min.css"/>
         <link rel="Stylesheet" type="text/css" href="Content/site.css" />
         <style type="text/css">
-            #diaTimeout
+            #diaFilter
             {
                 max-width: 300px;
                 padding: 19px 29px 29px;
@@ -23,6 +23,22 @@
                 -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
                 box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
             }      
+            #tblData
+            {
+                table-layout:fixed;
+            }
+            .fixedRow1
+            {
+                width: 80px;
+                overflow: hidden;
+                word-wrap: break-word;
+            }
+            .fixedRow2
+            {
+                width: 60%;
+                overflow: hidden;
+                word-wrap: break-word;
+            }
         </style>
     </head>
     <body>
@@ -37,12 +53,27 @@
             </div>
         </div>
         <!-- Body -->
-        <br />
-        <div class="well well-small">
-            Filter: <strong id="txtFilter">Today's Transactions</strong>
-                <a href="#" class="pull-right">Change</a>
+        <div class="row-fluid">
+            <div class="span6 offset3">
+                <br />
+                <div class="well well-small" style="margin-left:10px; margin-right:10px;">
+                    Filter: <strong id="txtFilter">Today's Transactions</strong>
+                        <a href="#" class="pull-right" onclick="filter();">Change</a>
+                </div>
+                <table id="tblData" class="table table-striped table-condensed">
+                    <thead>
+                        <th class="fixedRow1">Document</th>
+                        <th class="fixedRow2">Details</th>
+                        <th class="pull-right">Date</th>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
         </div>
-        
+        <!-- Filter -->
+        <div id="diaFilter" class="container-fluid modal hide fade">
+            
+        </div>
         <!-- Scripts -->
         <script src="phonegap.js"></script>
         <script type="text/javascript" src="Scripts/jQuery/jquery-1.9.1.min.js"></script>

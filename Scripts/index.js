@@ -302,6 +302,7 @@ var goToReport = function goToReportF() {
         }
     }, function callbackF(data) {
         var d = JSON.parse(data);
+        $.totalStorage('currentReportFilter', "Today's Transactions");
         if (d.exitCode === 0) {
             alert(JSON.stringify("Something's wrong! There may be zero transactions yet today. " 
                 + d.response.error));
