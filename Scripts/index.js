@@ -2,7 +2,7 @@ $(document).ready(function readyF() {
     // Initialize stuff
     document.addEventListener("backbutton", function backKeyDownF() {
         navigator.app.exitApp();
-    }, true);
+    }, false);
     $('#signin').hide();
     $('#changepw').hide();
     $('#forgotpw').hide();

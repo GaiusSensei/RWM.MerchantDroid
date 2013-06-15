@@ -28,7 +28,8 @@ $(document).ready(function readyF() {
 });
 
 var tryScan = function tryScanF() {
-    window.plugins.barcodeScanner.scan(    
+    var scanner = cordova.require("cordova/plugin/BarcodeScanner");
+    scanner.scan(    
         function scanGoodF(result) {
             if (!result.cancelled) {
                 // process result.text
