@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <widget xmlns = "http://www.w3.org/ns/widgets"
     xmlns:gap = "http://phonegap.com/ns/1.0"
-    id        = "com.phonegap.example"
+    id        = "com.rwmanila.merchants"
     versionCode="10" 
-    version   = "1.0.0">
+    version   = "1.0.1">
     
     <name>RWManila Merchants</name>
     
@@ -15,11 +15,11 @@
         Resorts World Manila 
     </author>
     
+    <gap:plugin name="BarcodeScanner" /> 
+    
     <preference name="phonegap-version" value="2.7.0" />
     <preference name="webviewbounce" value="false" />    
     <preference name="permissions" value="none"/>
     
     <feature name="http://api.phonegap.com/1.0/camera"/>
-    
-    <gap:plugin name="BarcodeScanner" /> 
 </widget>
