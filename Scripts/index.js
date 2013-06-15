@@ -288,12 +288,12 @@ var goToRedeem = function goToRedeemF() {
 };
 
 var goToReport = function goToReportF() {
-    $('#txtPleaseWait').text("Retrieving today's transactions..");    
+    $('#txtPleaseWait').text("Retrieving today's coupons..");    
     phoenix.userId = $.totalStorage('userId');
     phoenix.apiKey = $.totalStorage('apiKey');
     phoenix.send({
         cgrp:'$merchants',
-        cmnd:'getTransReports',
+        cmnd:'getCouponReports',
         prms:{
             'pci':$.totalStorage('ProfitCenterId'),
             'filter':'today',
@@ -302,13 +302,10 @@ var goToReport = function goToReportF() {
         }
     }, function callbackF(data) {
         var d = JSON.parse(data);
-        $.totalStorage('currentReportFilter', "Today's Transactions");
         if (d.exitCode === 0) {
-            alert(JSON.stringify("Something's wrong! There may be zero transactions yet today. " 
-                + d.response.error));
-            $.totalStorage('currentReport', null);
             window.location = "report.html";   
         } else {
+            $.totalStorage('currentReportFilter', "Today's Coupons");
             $.totalStorage('currentReport', d);
             window.location = "report.html";            
         }

@@ -29,7 +29,7 @@
             }
             .fixedRow1
             {
-                width: 80px;
+                width: 90px;
                 overflow: hidden;
                 word-wrap: break-word;
             }
@@ -57,8 +57,8 @@
             <div class="span6 offset3">
                 <br />
                 <div class="well well-small" style="margin-left:10px; margin-right:10px;">
-                    Filter: <strong id="txtFilter">Today's Transactions</strong>
-                        <a href="#" class="pull-right" onclick="filter();">Change</a>
+                    Filter: <strong id="txtFilter">Today's Coupons</strong>
+                        <a href="#" class="pull-right" onclick="$('#diaFilter').modal('show');">Change</a>
                 </div>
                 <table id="tblData" class="table table-striped table-condensed">
                     <thead>
@@ -72,7 +72,41 @@
         </div>
         <!-- Filter -->
         <div id="diaFilter" class="container-fluid modal hide fade">
-            
+            <h3>Change Filter</h3>
+            <select id="optFilter" class="span4">
+                <option>Transactions</option>
+                <option>Coupons</option>
+            </select>
+            <label class="radio span4">
+                <input id="rdoToday" name="filter" type="radio" checked>
+                Today (<span id="txtToday"></span>)
+            </label>
+            <label class="radio span4">
+                <input id="rdoMonthYear" name="filter" type="radio">
+                <label for="optMonth" class="span2">Month:</label>
+                <select id="optMonth" class="span2">
+                    <option value='0'>January</option>
+                    <option value='1'>February</option>
+                    <option value='2'>March</option>
+                    <option value='3'>April</option>
+                    <option value='4'>May</option>
+                    <option value='5'>June</option>
+                    <option value='6'>July</option>
+                    <option value='7'>August</option>
+                    <option value='8'>September</option>
+                    <option value='9'>October</option>
+                    <option value='10'>November</option>
+                    <option value='11'>December</option>
+                </select>                
+                <label for="optYear" class="span2">Year:</label>
+                <select id="optYear" class="span2">
+                    <option value='2013'>2013</option>
+                </select>                
+            </label>
+            <hr />
+            <a id="btnRefresh" href="#" class="btn btn-block btn-large btn-primary" onclick="refresh();">
+                Refresh Report</a>
+            <a href="#" class="btn btn-block btn-large" onclick="cancelFilter();">Cancel</a>
         </div>
         <!-- Scripts -->
         <script src="phonegap.js"></script>
